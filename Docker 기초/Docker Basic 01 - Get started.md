@@ -1,4 +1,4 @@
-# Udemy Docker Basic 01 - Get started
+# Docker Basic 01 - Get started
 #dev/skill/container/docker 
 
 ## 개요
