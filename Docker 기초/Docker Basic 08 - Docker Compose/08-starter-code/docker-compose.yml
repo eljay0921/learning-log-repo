@@ -1,0 +1,20 @@
+version: '3'
+services: 
+  flask-app: 
+    image: lj7812/grade-submission-portal:latest
+    container_name: flask-app
+    ports: 
+      - "5001:5001"
+    environment:
+      - GRADE_SERVICE_HOST=node-server
+    depends_on:
+      - node-server
+  node-server:
+    image: lj7812/grade-submission-api:latest
+    container_name: node-server
+    ports:
+      - "3000:3000"
+    # environment:
+    #   -
+    # depends_on:
+    #   - 
