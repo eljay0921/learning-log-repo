@@ -1,0 +1,49 @@
+version: '3'
+services: 
+  ecommerce-ui:
+    image: lj7812/ecommerce-ui:0.0.1
+    container_name: ecommerce-ui-container
+    ports:
+      - "4000:4000"
+    environment:
+      - REACT_APP_PROFILE_API_HOST=http://profile-management
+      - REACT_APP_PRODUCT_API_HOST=http://product-catalog
+      - REACT_APP_INVENTORY_API_HOST=http://product-inventory
+      - REACT_APP_ORDER_API_HOST=http://order-management
+      - REACT_APP_SHIPPING_API_HOST=http://shipping-and-handling
+      - REACT_APP_CONTACT_API_HOST=http://contact-support-team
+    depends_on:
+      - contact-support-team
+      - order-management
+      - product-catalog
+      - product-inventory
+      - profile-management
+      - shipping-and-handling
+
+  contact-support-team:
+    image: lj7812/contact-support-team:0.0.1
+
+  order-management:
+    image: lj7812/order-management:0.0.1
+    environment: 
+      # - REACT_APP_PRODUCT_API_HOST=http://product-catalog
+      # - REACT_APP_INVENTORY_API_HOST=http://product-inventory
+      - PRODUCT_INVENTORY_API_HOST=http://product-inventory
+      - PRODUCT_CATALOG_API_HOST=http://product-catalog
+      - SHIPPING_HANDLING_API_HOST=http://shipping-and-handling
+    depends_on:
+      - product-catalog
+      - product-inventory
+
+  product-catalog:
+    image: lj7812/product-catalog:0.0.1
+
+  product-inventory:
+    image: lj7812/product-inventory:0.0.1
+
+  profile-management:
+    image: lj7812/profile-management:0.0.1
+
+  shipping-and-handling:
+    image: lj7812/shipping-and-handling:0.0.1
+    
