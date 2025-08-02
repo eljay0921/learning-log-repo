@@ -1,9 +1,6 @@
 # Udemy Docker Basic 01 - Get started
 #dev/skill/container/docker 
 
-## 강의
-[온라인 강의 - 자신의 일정에 맞춰 뭐든지 배워보세요
-
 ## 개요
 ### Docker를 사용하는 근본적인 이유?
 * *It works on my machine!* → ==Bare metal== 문제
@@ -20,7 +17,7 @@
 - local 환경에 있는 어떤 애플리케이션(*.py)를 실행하고 싶다고 가정하면, 
   - `/Users/.../docker-course-remastered-main/lesson-starter-projects/01-starter-code/python-app.py`
   - 위 파일을 실행시킬 것이고, 다음과 같은 결과를 얻을 수 있다.
-    ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image.png)<!-- {"width":660} -->
+    ![](Docker%20Basic%2001%20-%20Get%20started/image.png)<!-- {"width":660} -->
 
 ### in Docker
 - 이를 ==Docker==에서 실행하려면, 
@@ -30,9 +27,9 @@
   - -> ==Docker Hub==는 Docker에서 제공하는 이미지 저장소다. like github
   - 이미지는? **스냅샷**을 생각하라.
   - -> 그 환경을 스냅샷으로 패키징하고, 그것을 Docker Hub에 업로드 한다.
-  ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%202.png)<!-- {"width":488} -->![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%203.png)<!-- {"width":501} -->
+  ![](Docker%20Basic%2001%20-%20Get%20started/image%202.png)<!-- {"width":488} -->![](Docker%20Basic%2001%20-%20Get%20started/image%203.png)<!-- {"width":501} -->
 - Docker Hub에서 우리가 사용할 Python 3.8 slim 버전을 tag에서 검색해 찾아보자. 다음과 같이 확인할 수 있다.
-  -> `docker pull python:3.8.20`![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%204.png)<!-- {"width":956} -->
+  -> `docker pull python:3.8.20`![](Docker%20Basic%2001%20-%20Get%20started/image%204.png)<!-- {"width":956} -->
 
 ## Docker로 시작하기
 > 자 그럼 docker로 어떻게 시작하면 될까?
@@ -50,38 +47,38 @@
 4. 이제 마운트 이후 수행할 명령어를 작성한다.
    - docker run -v "/Users/.../sources-lectures/docker-course-remastered-main/lesson-starter-projects/01-starter-code:/app/" python:3.8.19-slim python **/app/python-app.py** 
 5. 이제 명령어를 실행하자!
-   - 물론, 그 전에 Docker Desktop이 실행되어있는지 확인하자. (colima 등)![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%205.png)<!-- {"width":684} -->
+   - 물론, 그 전에 Docker Desktop이 실행되어있는지 확인하자. (colima 등)![](Docker%20Basic%2001%20-%20Get%20started/image%205.png)<!-- {"width":684} -->
    - 실행 결과는 다음과 같다.
      - `docker run -v "/Users/.../sources-lectures/docker-course-remastered-main/lesson-starter-projects/01-starter-code:/app/" python:3.8.19-slim python /app/python-app.py` 
-       ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%206.png)<!-- {"width":716} -->
+       ![](Docker%20Basic%2001%20-%20Get%20started/image%206.png)<!-- {"width":716} -->
      - bear에서 작성한 따옴표(“)가 터미널에서 다른 이슈가 있어 중간에 한 번 실패함 (편집 -> 대체 -> **스마트 인용** 체크 해제)
 6. 이제 실행된 docker process를 확인하자
    - 위 명령어를 몇 차례 더 실행하고, docker ps를 확인했다.
    - `docker ps -a`
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%207.png)<!-- {"width":883} -->
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%207.png)<!-- {"width":883} -->
    - 각각의 이름은 자동으로 생성되었다.
    - 물론 우리는 ==Docker Desktop==을 사용하고 있으므로 GUI 화면으로도 볼 수 있다.
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%208.png)<!-- {"width":890} -->
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%208.png)<!-- {"width":890} -->
 
 ## Docker 제어하기
 1. 이제 불필요한 컨테이너들을 ==삭제==하자.
 - docker rm {컨테이너 이름 or 컨테이너 ID}
-  ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%209.png)<!-- {"width":404} -->
+  ![](Docker%20Basic%2001%20-%20Get%20started/image%209.png)<!-- {"width":404} -->
 2. 이번에는 ==이름==을 지정해서 생성하자
    - docker run -v "/Users/.../sources-lectures/docker-course-remastered-main/lesson-starter-projects/01-starter-code:/app/" ==--name python-app-container== python:3.8.19-slim python /app/python-app.py
    - --name 옵션을 추가하고 이름을 작성하면 된다.
    - 그리고 다시 동일한 이름으로 컨테이너를 생성하려고 하면 오류와 함께 충돌되었다는 메시지를 준다.
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%2010.png)<!-- {"width":1037} -->
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%2010.png)<!-- {"width":1037} -->
    - 즉, 우리는 이미 컨테이너의 이름을 알고 있으므로, 해당 컨테이너를 삭제하거나, 다른 이름으로 생성하면 된다. 
    - -> **컨테이너의 이름을 작성해야 하는 이유**(책임)라고 할 수 있다.
 3. 그런데, Docker를 생성하고 수행이 끝나면 **바로 삭제하는 방법**도 있다.
    - ==--rm== 옵션을 추가하자 -> `docker run --rm -v …` 
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%2011.png)
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%2011.png)
    - docker가 실행되고 python 애플리케이션이 정상 동작했지만 이후 남아있는 컨테이너는 없다.
    - 덕분에 반드시 컨테이너 이름을 지정할 필요는 없겠지만, 대부분의 경우 **컨테이너 이름을 지정하는 것을 권장**한다. 
 4. 이번엔 Docker Image를 확인하자
    - `docker images` 명령어를 실행하면 설치된 이미지 목록이 나타난다.
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%2012.png)<!-- {"width":748} -->
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%2012.png)<!-- {"width":748} -->
    - 삭제는 `docker image rm {repository:tag}`로 가능하고, **Image ID**로도 가능하다.
 
 ## Docker로 "다시" 시작하기
@@ -90,8 +87,8 @@
 
 1. 마찬가지로 어떤 파일(애플리케이션)을 마운트 할 것인지 디렉토리를 확인하자.
    - /Users/…/sources-lectures/docker-course-remastered-main/lesson-starter-projects/02-starter-code/**JavaApp.jar**
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%2013.png)<!-- {"width":643} -->
-     ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%2014.png)
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%2013.png)<!-- {"width":643} -->
+     ![](Docker%20Basic%2001%20-%20Get%20started/image%2014.png)
      (openjdk:11-jre-slim)
 2. 명령어를 작성하자
    - `docker run --rm -v "/Users/.../sources-lectures/docker-course-remastered-main/lesson-starter-projects/02-starter-code/:/app/src"  --name java-app-container openjdk:11-jre-slim java -cp /app/src/JavaApp.jar JavaApp`
@@ -100,7 +97,7 @@
      - --name -> 컨테이너 이름 지정
      - openjdk:11-jre-slim -> jre 11 slim 이미지 지정
      - java 실행 명령어 -> 강의에서 빠뜨린 게 있는데 `java -cp /app/src/JavaApp.jar JavaApp`이라고 명령해야 동작한다. 
-       ![](Udemy%20Docker%20Basic%2001%20-%20Get%20started/image%2015.png)
+       ![](Docker%20Basic%2001%20-%20Get%20started/image%2015.png)
        (앞서 실행 테스트 과정에서 이미 java 이미지를 내려받아서 바로 동작하는 결과만 보인다)
 
 ---
