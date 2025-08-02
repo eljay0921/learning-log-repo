@@ -12,12 +12,12 @@
 먼저, 우리가 구축할 시스템에 어떤 것들이 있는지 보자.
 > workbook-starter-projects/03-starter-projects/...
 
-![](Docker%20Basic%2006%20-%20Microservices/image.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image.png)
 
 `ecmmerce-ui`부터 해서, `주문 관리`, `상품 재고` 등 다양한 애플리케이션이 존재한다. 우리는 `ecommerce-ui`를 먼저 실행할 계획이다. 
 
 ## (요구사항) ecommerce-ui
-![](Docker%20Basic%2006%20-%20Microservices/image%202.png)<!-- {"width":412} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%202.png)<!-- {"width":412} -->
 `ecommerce-ui`에는 `client`와 `server`가 있는데, `server`의 `server.js`에서 개발자의 지침을 읽어보자. 이 애플리케이션이 `bare metal`에서는 어떻게 실행되는지 설명하고 있다.
 ```javascript
 import express from 'express';
@@ -120,9 +120,9 @@ docker run --rm -p 4000:4000 --network ecommerce-network --name ecommerce-ui-con
 Server is running on port 4000
 ```
 docker run으로 `ecommerce-ui`를 실행시켰다. 이제 `localhost:4000`으로 접근하면 준비된 `ecommerce-ui` 서버가 확인된다.
-![](Docker%20Basic%2006%20-%20Microservices/image%203.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%203.png)
 CREATE AN ACCOUNT 페이지로 접근 해, SIGN UP을 시도하면 다음과 같이 오류가 발생하며 실패한다.
-![](Docker%20Basic%2006%20-%20Microservices/image%204.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%204.png)
 당연하게도, 아직 다른 서비스가 준비되지 않았기 때문이다. 현재 ecommerce-ui-container에서 출력되는 로그는 다음과 같다. 
 ```log
 Error signing up: TypeError: node-fetch cannot load undefined:3003/api/signup. URL scheme "undefined" is not supported.
@@ -163,7 +163,7 @@ app.listen(port, () => {
 
 ```
 이번에는 개발자의 지침 따위(?)는 없다. 소스코드와 포트 정보만 확인할 수 있을 뿐이다. 
-![](Docker%20Basic%2006%20-%20Microservices/image%205.png)<!-- {"width":409} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%205.png)<!-- {"width":409} -->
 profile-management의 파일 구조를 보고 dockerfile을 작성해보자.
 ## (Dockerize) profile-management
 ### Dockerfile
@@ -206,7 +206,7 @@ Authentication API is running on port 3003
 
 ### Test (1)
 docker build 이후 run까지 별다른 이슈 없이 정상적으로 완수했다. localhost:3003으로 접근되는 것도 확인했다.
-![](Docker%20Basic%2006%20-%20Microservices/image%206.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%206.png)
 자, 이제 다시 `ecommerce-ui`(localhost:4000)으로 접근해 Account를 다시 생성해보...려고 했는데, **여전히 실패**했다. 
 원인은 내가 생성한 `docker container`의 이름 때문이다. `profile-mgmt-container`로 생성했는데 이는 `ecommerce-ui-container`에서 접근할 **profile-management API**의 호스트명과 달랐던 것이다. 다시 강의와 동일하게 작성해보자.
 
@@ -250,11 +250,11 @@ Server is running on port 4000
 ```
 
 이번에는 드디어 성공했다. 다음과 같이 입력하고 sign up에 완료했다.
-![](Docker%20Basic%2006%20-%20Microservices/image%207.png)<!-- {"width":605} --> ![](Docker%20Basic%2006%20-%20Microservices/image%208.png)<!-- {"width":307} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%207.png)<!-- {"width":605} --> ![](assets/Docker%20Basic%2006%20-%20Microservices/image%208.png)<!-- {"width":307} -->
 이후 가입했던 계정 정보를 입력하니 로그인까지 가능했다.
-![](Docker%20Basic%2006%20-%20Microservices/image%209.png)<!-- {"width":605} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%209.png)<!-- {"width":605} -->
 아직 다른 메뉴에 접근하면 오류가 발생했지만, Manage Profile 메뉴는 접근이 가능했다. 
-![](Docker%20Basic%2006%20-%20Microservices/image%2010.png)<!-- {"width":605} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2010.png)<!-- {"width":605} -->
 
 ## (요구사항) shipping-and-handling
 > 이번에는 배송 및 취급 애플리케이션을 구축하자
@@ -390,15 +390,15 @@ Server is running on port 4000
 ...
 ```
 앞서 작성한 dockerfile로 다시 build를 진행했고, 서버까지 정상적으로 띄웠다. 기존에 잘 동작했던 profile-mgmt-container에도 이상 없다.
-![](Docker%20Basic%2006%20-%20Microservices/image%2011.png)
-![](Docker%20Basic%2006%20-%20Microservices/image%2012.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2011.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2012.png)
 
 그리고 이제 [앞서 실행](bear://x-callback-url/open-note?id=2D1BAF1E-AC29-4191-B472-CD3DF9D0BC0B&header=%28Dockerize%29%20shipping-and-handling)했던 `ship-handle-app-container`를 확인해보면(Shipping Options 클릭) 다음과 같이 정상적인 페이지가 호출된다.
-![](Docker%20Basic%2006%20-%20Microservices/image%2013.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2013.png)
 
 ## (요구사항) contact-support-team
 > 이번에는 contact-support-team 애플리케이션이다. 계속하자.
-![](Docker%20Basic%2006%20-%20Microservices/image%2014.png)<!-- {"width":353} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2014.png)<!-- {"width":353} -->
 > workbook-starter-projects/03-starter-projects/contact-support-team/server.py
 > workbook-starter-projects/03-starter-projects/contact-support-team/requirements.txt
 이번에는 2개의 파일을 참조하자.
@@ -483,7 +483,7 @@ docker run --rm -p 8000:8000 --network ecommerce-network --name contact-api-cont
 참고로 로컬에서 직접 접근하고 싶은 게 아니라면 굳이 `-p` 옵션으로 포트를 매핑할 필요는 없다. 아무튼 이전과 같은 패턴으로 `contact-support-app`을 컨테이너로 실행시켰다. 이름은 [앞서 작성](bear://x-callback-url/open-note?id=2D1BAF1E-AC29-4191-B472-CD3DF9D0BC0B&header=Dockerfile%20re-write%20%28ecommerce-ui%20%EA%B0%9C%EC%84%A0%29)했던 `ecommerce-ui`의 `dockerfile ENV`를 참고했다. -> `contact-api-container`
 
 테스트 결과, http://localhost:8000/은 `Not Found`를 응답하지만 서버는 정상 실행 중인 상태다. `ecommerce-ui-container`에서도 정상적으로 접근되고 있다. (메인 화면에서 Contact Support 클릭) 
-![](Docker%20Basic%2006%20-%20Microservices/image%2015.png)<!-- {"width":963} -->![](Docker%20Basic%2006%20-%20Microservices/image%2016.png)<!-- {"width":482} --> ![](Docker%20Basic%2006%20-%20Microservices/image%2017.png)<!-- {"width":462} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2015.png)<!-- {"width":963} -->![](assets/Docker%20Basic%2006%20-%20Microservices/image%2016.png)<!-- {"width":482} --> ![](assets/Docker%20Basic%2006%20-%20Microservices/image%2017.png)<!-- {"width":462} -->
 
 다음은 contact-api-container에 찍히고 있는 로그이다.
 ```log
@@ -519,7 +519,7 @@ docker run --rm -p 8000:8000 --network ecommerce-network --name contact-api-cont
 ## (요구사항) product-inventory
 > 계속해서 앞선 내용의 반복이므로 설명은 생략한다.
 
-![](Docker%20Basic%2006%20-%20Microservices/image%2018.png)<!-- {"width":423} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2018.png)<!-- {"width":423} -->
 > workbook-starter-projects/03-starter-projects/product-inventory/inventory_api.py
 > workbook-starter-projects/03-starter-projects/product-inventory/requirements.txt
 ```python
@@ -591,11 +591,11 @@ docker run --rm -p 3002:3002 --network ecommerce-network --name inventory-api-co
 ...
 ```
 이렇게 `product-inventory` 애플리케이션까지 컨테이너로 잘 띄웠으나, 해당 `Inventory Management` 페이지에서 내부적으로 `product api`까지 호출하고 있기 때문에 아직 정상적으로 동작하진 않는다. 바로 이어서 `product api(product-catalog)`까지 진행하자.
-![](Docker%20Basic%2006%20-%20Microservices/image%2019.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2019.png)
 
 ## (요구사항) product-catalog
 
-![](Docker%20Basic%2006%20-%20Microservices/image%2020.png)<!-- {"width":360} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2020.png)<!-- {"width":360} -->
 > workbook-starter-projects/03-starter-projects/product-catalog/index.js
 ```js
 const express = require('express');
@@ -710,15 +710,15 @@ Product Catalog microservice is running on port 3001
 ```
 
 이후 `ecommerce-ui-container`로 띄운 서버(localhost:4000)의 메인 화면에서 `Inventory Management` 메뉴로 접근하면 정상적인 화면을 볼 수 있다. 이로써 `product-inventory`와 `product-catalog` 시스템을 모두 테스트했다. 
-![](Docker%20Basic%2006%20-%20Microservices/image%2021.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2021.png)
 
 물론 Product Catalog 메뉴로 접근해도 정상적인 화면을 볼 수 있다.
-![](Docker%20Basic%2006%20-%20Microservices/image%2022.png)<!-- {"width":444} --> ![](Docker%20Basic%2006%20-%20Microservices/image%2023.png)<!-- {"width":507} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2022.png)<!-- {"width":444} --> ![](assets/Docker%20Basic%2006%20-%20Microservices/image%2023.png)<!-- {"width":507} -->
 하지만 아직 ADD TO CART 기능은 동작하지 않는다.
 
 ## (요구사항) order-management
 > 이제 마지막 애플리케이션이다.
-![](Docker%20Basic%2006%20-%20Microservices/image%2024.png)<!-- {"width":379} -->
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2024.png)<!-- {"width":379} -->
 > workbook-starter-projects/03-starter-projects/order-management/src/main/resources/application.properties
 > workbook-starter-projects/03-starter-projects/order-management/pom.xml
 ```properties
@@ -800,7 +800,7 @@ docker run --rm -p 9090:9090 --network ecommerce-network --name order-api-contai
 ```
 
 이제 order-management가 정상적으로 동작하는지 테스트하자. 아래 화면에서 ADD TO CART를 누르면 오류 없이 정상적으로 처리된다. 아래 order-api-container의 로그에서도 확인할 수 있다.
-![](Docker%20Basic%2006%20-%20Microservices/image%2025.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2025.png)
 ```log
 http://inventory-api-container:3002/api/inventory/1
 http://product-api-container:3001/api/products/1
@@ -809,7 +809,7 @@ Product ID: 1, Quantity: 1, Name: Wireless Bluetooth Headphones, Price: 59.99
 ```
 
 이후 몇 차례 상품을 더 담고, 메인 화면에서 Order Management 메뉴로 접근하면 My Cart 항목이 제대로 출력된다. 
-![](Docker%20Basic%2006%20-%20Microservices/image%2026.png)
+![](assets/Docker%20Basic%2006%20-%20Microservices/image%2026.png)
 ```log
 2
 Electronics High-quality sound and comfortable fit Wireless Bluetooth Headphones 59.99 10.0

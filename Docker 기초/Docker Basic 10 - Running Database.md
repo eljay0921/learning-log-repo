@@ -8,7 +8,7 @@
 ## 개요
 > 이번 장에서는 docker container 내부에서 실행할 database를 실습하자.
 
-![](Docker%20Basic%2010%20-%20Running%20Database/image.png)
+![](assets/Docker%20Basic%2010%20-%20Running%20Database/image.png)
 
 가장 앞 단에는 `flask-app` container가 있으며, 해당 container는 `node-app`을 호출한다. 그리고 다시 `node-app`은 `Mongo DB`를 참조한다.
 
@@ -185,7 +185,7 @@ volumes:
   - 환경변수 설정 -> DB 정보
 
 **Database service**를 정의할 때 중요한 것 중 하나는 `volumes`이다. `container`는 언제든 중지 또는 삭제, 재실행될 수 있지만 우리는 `data`의 영속성(**persistence**)을 지킬 필요가 있다. 그렇기에 `data`가 어디에 저장되어야 하는지 명시해야 한다. 
-![](Docker%20Basic%2010%20-%20Running%20Database/image%202.png)<!-- {"width":616} -->
+![](assets/Docker%20Basic%2010%20-%20Running%20Database/image%202.png)<!-- {"width":616} -->
 
 ## Docker Compose UP!
 자 이제 전체 서비스를 실행해보자.
@@ -205,8 +205,8 @@ docker compose up -d
  ✔ Container node-server                   Started                                                                                                                                                             
  ✔ Container flask-app                     Started
 ```
-![](Docker%20Basic%2010%20-%20Running%20Database/image%203.png)
-![](Docker%20Basic%2010%20-%20Running%20Database/image%204.png)
+![](assets/Docker%20Basic%2010%20-%20Running%20Database/image%203.png)
+![](assets/Docker%20Basic%2010%20-%20Running%20Database/image%204.png)
 이렇게 로그를 보기엔 서비스가 정상적으로 올라온 것처럼 보인다. 자 이제 실제로 데이터를 생성하고 조회해보자.
 
 실수로 `score`에 과목 이름을 적고, `subject`에 점수(숫자)를 적었더니 `ValidationError`가 발생하고 `application`이 응답하지 않았다. 일단 application의 기능을 검증하는 시간이 아니니까 넘어가자. 😅
@@ -218,7 +218,7 @@ docker compose up -d
 ```
 
 `form`에서 몇 가지 입력 테스트를 완료했다. 이제 서버를 내렸다가 다시 올려도 데이터가 살아있는지 확인하면 되겠다.
-![](Docker%20Basic%2010%20-%20Running%20Database/image%205.png)<!-- {"width":703} -->
+![](assets/Docker%20Basic%2010%20-%20Running%20Database/image%205.png)<!-- {"width":703} -->
 
 ### docker compose down...!
 ```sh
@@ -250,7 +250,7 @@ docker compose up -d
 `-d` 옵션은 `detached mode`라고 해서 백그라운드로 실행하는 것이다. 자꾸 터미널 입력이 불편해져서 사용하고 있다.
 
 그리고 다시 `Flask-app`(localhost:5001/grades)으로 접근하면 서버를 다시 올렸음에도 불구하고 `data`가 모두 살아있는 것을 볼 수 있다. 
-![](Docker%20Basic%2010%20-%20Running%20Database/image%206.png)
+![](assets/Docker%20Basic%2010%20-%20Running%20Database/image%206.png)
 
 ## 정리
 > 이번 챕터에서는 database를 컨테이너로 실행하는 것을 학습했다.

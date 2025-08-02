@@ -6,7 +6,7 @@
 [온라인 강의 - 자신의 일정에 맞춰 뭐든지 배워보세요](https://www.udemy.com/course/docker-training-learn-docker-from-zero-to-cloud/learn/lecture/42827656#overview)
 
 ## 개요
-![](Docker%20Basic%2007%20-%20Docker%20Hub/image.png)<!-- {"width":460} -->
+![](assets/Docker%20Basic%2007%20-%20Docker%20Hub/image.png)<!-- {"width":460} -->
 > 이번 챕터에서는 Docker Hub를 관리하는 기초를 학습한다.
 
 ## Docker Hub Push
@@ -27,7 +27,7 @@ ecommerce-ui            latest    24516bdcf614   10 hours ago   2.12GB
 
 ### Docker Hub 확인
 그 전에 내 Docker Hub 계정 상태는 어떤지 확인해보자. 이미 4년 전에 난 비슷한 실습을 했던 것 같다. ~~그때 끝내놓을 것을 지금 왜 다시 하고 있는가... 어휴.~~ 아무튼 경고 메시지를 보니 너무 오래된 이미지라서 archiving할 것을 권유하고 있다. 너무 오래되었으니 삭제하자.
-![](Docker%20Basic%2007%20-%20Docker%20Hub/image%202.png)
+![](assets/Docker%20Basic%2007%20-%20Docker%20Hub/image%202.png)
 간단하다. 해당 이미지의 Settings로 진입한 뒤 **Delete repository**를 수행하면 된다. (`DELETING` 상태가 되며 일정 시간 뒤 삭제된다)
 
 ### Push image
@@ -96,7 +96,7 @@ f8497603fb88: Pushed
 ...
 ```
 `1.0.0` 태그를 푸시했으며, 약 25초 정도 소요된 후 완료되었다. Docker Hub에서도 확인된다.
-![](Docker%20Basic%2007%20-%20Docker%20Hub/image%203.png)
+![](assets/Docker%20Basic%2007%20-%20Docker%20Hub/image%203.png)
 
 두 번째 태그인 `1.0.1` 버전을 push 해봤다. 이미 존재하는 Layer라는 메시지와 함께 약 6초만에 완료되었다.
 ```sh
@@ -113,7 +113,7 @@ c6481a180440: Layer already exists
 5415c047373c: Layer already exists
 1.0.1: digest: sha256:e269172a6b7a3ca9afb0097f10d9ea27d537f0fe1170439e7671ef736b5cb4e5 size: 856
 ```
-![](Docker%20Basic%2007%20-%20Docker%20Hub/image%204.png)
+![](assets/Docker%20Basic%2007%20-%20Docker%20Hub/image%204.png)
 
 ## 정리
 > Docker Hub로 저장소와 이미지를 관리하는 방법을 학습했다.

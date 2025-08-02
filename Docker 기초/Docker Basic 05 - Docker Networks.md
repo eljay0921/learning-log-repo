@@ -7,7 +7,7 @@
 
 ## 개요
 이번 장에서는 Docker 컨테이너 간 네트워크에 대해서 알아보자. Flask Application(portal)과 Node.js Application(api)을 각각 도커 컨테이너로 실행하고, 이들 간에 통신이 가능하도록 실습할 예정이다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image.png)
 
 ## 요구사항 확인하기 (node.js, api)
 flask와 node 애플리케이션이 각각 어떤 요구사항을 가지고 있는지 확인하자.
@@ -58,7 +58,7 @@ app.listen(port, () => {
 
 ## Dockerfile (node.js, api) 작성하기
 위 요구사항을 참고해 dockerfile을 작성하자. 참고로 이 application의 프로젝트 구조는 다음과 같다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%202.png)<!-- {"width":396} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%202.png)<!-- {"width":396} -->
 ```dockerfile
 ## Base Image
 FROM node:14
@@ -99,8 +99,8 @@ node-app-api   latest    2e20718db5b3   46 seconds ago   1.3GB
 docker run --rm -p 3001:3000 --name node-app-api-container node-app-api
 Grade service is running on port 3000
 ```
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%203.png)<!-- {"width":544} -->
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%204.png)<!-- {"width":609} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%203.png)<!-- {"width":544} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%204.png)<!-- {"width":609} -->
 node.js 서버가 정상적으로 실행되었으며, `localhost:3001`로 접근되는 것까지 확인했다. 이제 이 컨테이너를 유지한 상태에서 **Flask application** 서버 이미지를 생성하고 컨테이너로 실행하자.
 
 ## 요구사항 확인하기 (flask, portal)
@@ -211,13 +211,13 @@ docker run --rm -p 5002:5001 --name flask-app-portal-container flask-app-portal
  * Debugger PIN: 114-167-061
 ```
 다행히 의도한 대로 build 및 run이 정상 동작했다. localhost:5002로 접근했더니 다음과 같이 Flask Application으로 서비스하는 페이지를 확인할 수 있었다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%205.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%205.png)
 
 지금까지 진행한 결과로 2개의 컨테이너가 실행 중인 상태이다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%206.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%206.png)
 
 이후 Flask Portal 페이지를 다음과 같이 테스트 해봤는데, 역시나 예상대로 오류가 발생한다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%207.png)<!-- {"width":283} --> ![](Docker%20Basic%2005%20-%20Docker%20Networks/image%208.png)<!-- {"width":615} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%207.png)<!-- {"width":283} --> ![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%208.png)<!-- {"width":615} -->
 
 ## 오류 해결하기 (flask, portal)
 자, 오류를 해결하자. 앞선 [요구사항](bear://x-callback-url/open-note?id=FE52FF97-6E91-41EC-BE3A-F52E82406606&header=%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0%20%28flask,%20portal%29)을 다시 확인하면, 환경 변수 `GRADE_SERVICE_HOST`에 대한 언급이 있다. 이 점을 고려해 docker run을 다시 실행해 보자. 
@@ -227,12 +227,12 @@ docker run --rm -p 5002:5001 --name flask-app-portal-container -e GRADE_SERVICE_
 ```
 
 서버가 정상적으로 올라오지만 여전히 같은 동작은 실패하고 있다. 환경 변수 `GRADE_SERVICE_HOST`는 반영되었지만 통신에 실패한다. 
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%209.png)<!-- {"width":845} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%209.png)<!-- {"width":845} -->
 -> 이는 사실 각 **Docker 컨테이너가 서로 격리된 환경**이기 때문이다. Flask application이 실행 중인 컨테이너에는 node.js application이 실행되고 있지 않다. 서로 다른 컨테이너다.
 
 ### Docker Network 만들기
 이를 위해 각 컨테이너가 서로 통신할 수 있는 환경을 구성해야 한다. 그게 바로 `docker network` 명령어다. 우선, 실행 중인 컨테이너를 모두 종료하고 진행하자.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2010.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2010.png)
 
 이후, `docker network`를 생성하자. 이번에 network를 처음 생성했지만, 기본적으로 생성되어있는 것으로 보이는 네트워크들이 보인다. 
 ```sh
@@ -267,17 +267,17 @@ docker run --rm -p 5002:5001 --network my-network --name flask-app-portal-contai
 ```
 
 이후 다시 flask app을 테스트하기 위해 `localhost:5002`로 접근해, 다음과 같이 값을 입력하고 `submit`을 진행했고, 결과는 **성공**이다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2012.png)<!-- {"width":351} --> ![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2011.png)<!-- {"width":567} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2012.png)<!-- {"width":351} --> ![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2011.png)<!-- {"width":567} -->
 또한 node app을 확인하기 위해 localhost:3001로 접근해, /grades API를 호출하면 다음과 같이 나타난다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2016.png)<!-- {"width":639} -->
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2016.png)<!-- {"width":639} -->
 
 다음은 각각 flask app과 node app에 찍히고 있는 로그 상황이다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2013.png)
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2014.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2013.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2014.png)
 
 #### Docker network 최종 모습
 같은 docker network에 속한 2개의 컨테이너의 모습이다.
-![](Docker%20Basic%2005%20-%20Docker%20Networks/image%2015.png)
+![](assets/Docker%20Basic%2005%20-%20Docker%20Networks/image%2015.png)
 
 ---
 

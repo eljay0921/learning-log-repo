@@ -118,7 +118,7 @@ CMD ["python", "flask-demo/app.py"]
 ```sh
 docker build -t flask-app:0.0.1 .
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image.png)
 Dockerfile에 명시했던 RUN 명령어가 정상적으로 동작했다.
 ```sh
 docker images
@@ -135,7 +135,7 @@ docker run --rm --name flask-app-container flask-app:0.0.1
    WARNING: This is a development server. Do not use it in a production deployment.
  * Running on http://172.17.0.2:5000/ (Press CTRL+C to quit)
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%202.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%202.png)
 docker run 결과로 flask-app이 정상적으로 올라온 것으로 보였으나, local에서는 해당 경로로 접근되지 않았다.
 > http://172.17.0.2:5000/
 docker container는 호스트(로컬)와 완전히 격리되어있다. 즉, 호스트와 해당 컨테이너 간에 통신을 위해 포트를 매핑할 필요가 있다. docker run을 다시 실행하자.
@@ -143,9 +143,9 @@ docker container는 호스트(로컬)와 완전히 격리되어있다. 즉, 호�
 docker run --rm -p 8080:5000 --name flask-app-container flask-app:0.0.1
 ```
 ==-p== 속성을 통해 호스트(로컬)의 8080 포트와 Docker container의 5000 포트를 매핑했다. 이제 localhost:8080으로 접근하면 다음과 같이 Flask Web App이 동작하고 있는 것을 확인할 수 있다.
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%203.png)<!-- {"width":496} -->
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%203.png)<!-- {"width":496} -->
 물론, 이런 상태는 ==Docker Desktop==을 통해 보다 편리하게 확인할 수 있다.
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%204.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%204.png)
 
 ### Dockerfile 작성하기 (v2)
 > 앞선 내용도 충분하나, **특정 폴더만 containerizing**하도록 하자.
@@ -190,8 +190,8 @@ docker run --rm -p 8081:5000 --name flask-app-container flask-app:0.0.2
  * Running on http://172.17.0.2:5000/ (Press CTRL+C to quit)
 
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%205.png)
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%206.png)<!-- {"width":544} -->
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%205.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%206.png)<!-- {"width":544} -->
 마찬가지로 정상 동작하는 것을 확인했다.
 
 ### Dockerfile 작성하기 (v3)
@@ -252,7 +252,7 @@ COPY flask-demo/ .
 ---
 ### Docker build (0.0.3)
 위 설명대로 빌드 캐싱 최적화가 이루어졌다. 아래와 같이 docker build를 진행하면, ==CACHED==로 출력되고 있는 단계들이 보인다.
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%207.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%207.png)
 물론 ==WORKDIR==과 ==COPY== 단계는 이전에도 ==CACHED==로 진행되었다. 다만 이번 개선으로 `RUN pip ~ ` 부분에서까지 최적화가 이루어진 것이다. 
 
 ### Dockerfile 작성하기 (v4)
@@ -342,7 +342,7 @@ CMD ["flask", "run", "--host=0.0.0.0"]
 ---
 
 아무튼, 위의 2번째 줄과 같이 수정 후 다시 build 했고, 결과적으로 성공했다. 
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%208.png)<!-- {"width":588} -->
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%208.png)<!-- {"width":588} -->
 
 ---
 
@@ -400,12 +400,12 @@ public class AppController {
 //
 // I trust you to choose the best route for your journey. May your application have a smooth voyage!
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%209.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%209.png)
 
 ### Dockerfile 작성하기
 #### Docker hub
 먼저 Docker hub에서 maven 이미지를 확인하자.
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2010.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2010.png)
 
 #### Dockerfile
 ```dockerfile
@@ -446,8 +446,8 @@ CMD ["mvn", "clean", "spring-boot:run"]
 docker build를 다시 진행하고, docker run을 재시도했다. (위와 동일)
 
 그 결과 pom.xml에 선언된 ==수많은 dependencies의 다운로드가 진행==되었다. 이 작업은 수 초 이상 진행되었고, 어쨌든 SpringBoot Application은 성공적으로 올라왔다. 하지만 매번 이렇게 필요한 것들을 내려받는 방식은 옳지 않다. 이를 개선하자.
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2011.png)
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2012.png)<!-- {"width":488} -->
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2011.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2012.png)<!-- {"width":488} -->
 
 ### Dockerfile 작성하기 (v2)
 앞선 [요구사항](bear://x-callback-url/open-note?id=89395A71-E1BD-4B78-944A-EA245CAEE4E6&header=%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0)을 보면, option 2가 명시되어있다. 이를 이용해 Dockerfile을 개선하고, ==이미지 빌드 과정에 필요한 종속성 대상들을 모두 설치==하자.
@@ -479,8 +479,8 @@ docker build -t spring-boot-demo:0.0.2 .
 ...
 ```
 docker build 명령을 실행하니, 이미지 생성 과정에서 수 많은 dependencies를 내려받는 것을 확인할 수 있었다. 아래 캡쳐가 그 상황이다. 이전에 우리가 docker run 명령을 통해 컨테이너가 시작될 때 진행했던 과정이 이제는 이미지 빌드(생성) 과정으로 옮겨진 것을 이해할 수 있다. 해당 과정(`RUN mvn install`)은 총 `12.9초`가 소요되었다. 이제 이미지 생성 단계에서 종속성을 모두 갖췄으니, **컨테이너 실행 속도는 더욱 빨라질 것**이다.
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2013.png)
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2014.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2013.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2014.png)
 
 ```sh
 docker images
@@ -491,7 +491,7 @@ spring-boot-demo   0.0.1     a6825582cc1d   19 minutes ago   661MB
 docker run --rm -p 8080:8080 --name spring-boot-demo-container spring-boot-demo:0.0.2
 ...
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2015.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2015.png)
 이전과 달리 ==download 과정없이 바로 SpringBoot Application이 실행된 것을 확인==할 수 있다.
 
 ### Dockerfile 작성하기 (v3)
@@ -530,14 +530,14 @@ spring-boot-demo   0.0.2     4c87f6c68326   18 minutes ago       848MB
 spring-boot-demo   0.0.1     a6825582cc1d   34 minutes ago       661MB
 ...
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2016.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2016.png)
 `docker build` 명령 실행 결과, `v2`에서와 마찬가지로 ==RUN== 명령어가 실행되며 `dependencies`를 내려받아 패키징하는 과정이 진행되었다. 
 
 ```sh
 docker run --rm -p 8080:8080 --name spring-boot-demo-container spring-boot-demo:0.0.3
 ...
 ```
-![](Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2017.png)
+![](assets/Docker%20Basic%2004%20-%20Containerizing%20Web%20Apps/image%2017.png)
 이후 `docker run` 명령 실행 결과 SpringBoot Application이 바로 실행된 것을 볼 수 있다. 앞서 이미지 빌드 단계에서 maven package(jar 파일 생성) 과정까지 이미 완료했기 때문이다. 이렇게 `v3`에서는 빌드와 실행이 분리되어 이제 이 컨테이너는 독립 실행 가능한 JAR 파일을 운영하고 있다.
 
 

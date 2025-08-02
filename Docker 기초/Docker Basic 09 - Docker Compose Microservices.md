@@ -2,13 +2,13 @@
 
 #dev/skill/container
 
-## 강의<!-- {"fold":true} -->
+## 강의
 [온라인 강의 - 자신의 일정에 맞춰 뭐든지 배워보세요](https://www.udemy.com/course/docker-training-learn-docker-from-zero-to-cloud/learn/lecture/43367524#overview)<!-- {"preview":"true"} -->
 
 ## 개요
 > 이제 docker compose를 이용해, [[Docker Basic 06 - Microservices]]에서 학습했던 e-commerce 서비스를 Containerize하자
 
-## 사전 준비<!-- {"fold":true} -->
+## 사전 준비
 강의를 시작하는데 강사가 이미 해당 서비스들을 모두 푸시했다고 이야기한다. (...) 나도 학습 준비를 해보자 😅
 
 먼저 깔끔한 시작을 위해 `prune`을 명령하고, 
@@ -16,9 +16,9 @@
 docker system prune -a
 ```
 
-### Push to Docker Hub<!-- {"fold":true} -->
+### Push to Docker Hub
 각각의 application을 빌드 및 태깅, 그리고 push 한다. 아래는 대상 applications이며, 각 명령은 각각의 폴더 하위에서 진행한다.
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image.png)<!-- {"width":963} -->
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image.png)<!-- {"width":963} -->
 ```sh
 docker build -t lj7812/ecommerce-ui:0.0.1 . 
 [+] Building 53.6s (17/17) FINISHED
@@ -54,17 +54,17 @@ lj7812/ecommerce-ui            0.0.1     9dc99c7bf585   5 minutes ago        2.1
 ```
 태그가 `1.0.0`이 아니라, `0.0.1`로 작성되었다는 것을 중간에 알았다. 뭐 상관없으니... 그냥 `0.0.1`로 진행한다. ~~귀찮다~~
 
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%202.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%202.png)
 그리고 각각의 `image`를 `docker push`했다. 내용은 생략하겠다. 아래는 업로드 완료한 모습.
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%203.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%203.png)
 
-### Clear<!-- {"fold":true} -->
+### Clear
 그리고 다시 한번 시스템을 정리하자. 우리는 ==docker-compose==를 이용해 Microservice e-commerce를 구축할 것이다. 
 ```sh
 docker system prune -a
 ```
 
-## Docker Compose!<!-- {"fold":true} -->
+## Docker Compose!
 > 이제 docker-compose.yml 파일을 작성하자.
 
 우리는 e-commerce 서비스의 몇 가지 요구사항을 알고 있다.
@@ -125,20 +125,20 @@ services:
 ```
 결과를 보면 알겠지만, 앞에서 배운 것과 조금 다르게 작성했다. 2가지를 생략했다. (강의에서는 모두 작성하고 있다)
 
-### (1) container_name 생략<!-- {"fold":true} -->
+### (1) container_name 생략
 기본인 `ecommerce-ui`를 제외한 나머지 서비스는 `container_name`을 **생략**했다. 그 이유는 **Scale-out, 확장성**에 있다. (ecommerce-ui도 생략해도 된다)
 1. Docker Compose는 자동으로 서비스명 자체를 DNS 이름으로 사용한다.
 2. container_name을 생략하면 자동으로 `{프로젝트명}_{서비스명}_{숫자}`의 형태로 컨테이너 이름을 생성한다.
 -> 즉, 통신은 서비스 이름을 기준으로 하기에 문제가 없고, 컨테이너 이름의 중복을 피할 수 있다.
 
-### (2) ports 생략<!-- {"fold":true} -->
+### (2) ports 생략
 단순히 로컬 접근이 불필요할 것 같아서 생략했다. 우리는 `ecommerce-ui`로만 접속해 테스트하면 된다. 
 
-### (3) 이름의 통일<!-- {"fold":true} -->
+### (3) 이름의 통일
 **`container_name`을 생략**하면서 자동 이름을 적용하기 때문에 `environment`에서도, `depends_on`에서도 각각의 서비스명에서도 모두 이름을 간편하게 통일했다. `docker-compose.yml` 파일을 보다 간결하게 작성할 수 있게 되었으며, 오탈자 가능성이 낮아졌다.
 -> 모든 것들 서비스 이름을 이용해 작성하면 된다.
 
-### docker compose up<!-- {"fold":true} -->
+### docker compose up
 이제 해당 docker-compose.yml 파일이 위치하는 경로로 이동해 명령을 실행하자.
 ```sh
 docker compose up
@@ -151,7 +151,7 @@ docker compose up
  ✔ product-inventory Pulled                                                                                                                                                                               
  ⠇ order-management [⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿] 291.9MB / 306.6MB Pulling
 ```
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%204.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%204.png)
 진행 중, order-management만 한참 동안 pulling 상태였다. 뭔가 네트워크 오류인듯 하여 취소 후 다시 진행하니 정상적으로 컨테이너들이 올라왔다.
 
 보다시피 각각의 서비스가 모두 올라왔다.
@@ -202,12 +202,12 @@ order-management-1       | [INFO] Copying 0 resource from src/main/resources to 
 ```
 
 -> docker desktop
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%205.png)
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%206.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%205.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%206.png)
 
-### 오류 발생<!-- {"fold":true} -->
+### 오류 발생
 docker desktop으로 로그를 보면서 `localhost:4000`에 접속해 테스트를 하고 있었다. 모두 정상적으로 동작했는데, 갑자기 오류 메시지가 길게 찍혔다. 특정 상품을 **ADD TO CART**하는 버튼에서 발생했다. 
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%207.png)<!-- {"width":567} -->
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%207.png)<!-- {"width":567} -->
 
 아래 로그를 보면 `inventory-api-container`라는 host를 찾을 수 없는 것처럼 보인다. 그런데 이상하다 난 `docker-compose.yml` 파일에서 컨테이너 이름을 이렇게 지정하지 않았는데? 어딘가 캐싱이 되어있는 것인가...
 ```log
@@ -221,7 +221,7 @@ java.net.UnknownHostException: inventory-api-container
 ...
 ```
 
-### 오류 해결하기 : TroubleShooting<!-- {"fold":true} -->
+### 오류 해결하기 : TroubleShooting
 이 문제를 해결하기 위해 컨테이너를 다 내리고 상황을 초기화 해보자
 ```sh
 docker compose down -v
@@ -249,7 +249,7 @@ deleted: sha256:63f2023a62b109c468619971631597dd4a5a233b6a0934b5f5fbe3e2c9087dd0
 docker compose up --build -d
 ```
 이후, 다시 docker compose up을 실행해봤다.
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%208.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%208.png)
 최종적으로 완료된 로그를 보면, 문제가 되었던 `inventory-api-container`라는 컨테이너 이름은 없다. 물론 아까부터 없었다. 과연 이번에는...
 ```sh
 [+] Running 8/8
@@ -375,7 +375,7 @@ docker compose up
 ```
 
 됐다. 드디어 성공이다. order-management도 정상적으로 http://product-inventory:3002 api를 호출하고 있다. 이제 상품 화면에서 ADD TO CART를 하더라도 오류가 발생하지 않는다.
-![](Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%209.png)
+![](assets/Docker%20Basic%2009%20-%20Docker%20Compose%20Microservices/image%209.png)
 ## 정리
 > 여러 서비스를 정의하고, 각각에 필요한 환경변수와 의존성 등을 정의하는 방법을 익혔다.
 - docker-compose.yml 작성 방법

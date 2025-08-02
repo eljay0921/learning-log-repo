@@ -8,7 +8,7 @@
 [온라인 강의 - 자신의 일정에 맞춰 뭐든지 배워보세요](https://www.udemy.com/course/docker-training-learn-docker-from-zero-to-cloud/learn/lecture/43367448#overview)
 
 ## 개요
-![](Docker%20Basic%2003%20-%20Dockerfiles/image.png)<!-- {"width":870} -->
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image.png)<!-- {"width":870} -->
 이번 장에서는 Dockerfile에 대해 알아보자
 
 ## Dockerfile 구성
@@ -61,16 +61,16 @@ CMD ["python", "/app/python-app.py"]
 
 ### 빌드
 - 먼저 docker build를 진행하고
-  ![](Docker%20Basic%2003%20-%20Dockerfiles/image%202.png)
+  ![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%202.png)
 - 이후 docker images를 확인해 보면, 방금 빌드한 `python-app`이 생성되었다.
-  ![](Docker%20Basic%2003%20-%20Dockerfiles/image%203.png)
+  ![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%203.png)
 
 ### 실행
 이제 앞서 생성한 이미지를 가지고 컨테이너를 실행하자.
 - `docker run --rm --name python-app-container python-app`
 - 명령어가 깔끔하게 줄어들었다.
 - 실행 결과 -> 
-  ![](Docker%20Basic%2003%20-%20Dockerfiles/image%204.png)
+  ![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%204.png)
 
 ### 살펴보기
 > 추가적으로, 실행된 컨테이너 내부를 살펴보고, 상호작용하기 위한 방법을 알아보자.
@@ -78,10 +78,10 @@ CMD ["python", "/app/python-app.py"]
 기존 명령어에 ==-it==를 추가하고, ==/bin/sh==를 추가한다.
 - `docker run -it --rm --name python-app-container python-app /bin/sh`
 - 실행 결과 -> 
-  ![](Docker%20Basic%2003%20-%20Dockerfiles/image%205.png)
+  ![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%205.png)
 - 보다시피, 우리는 곧장 **작업 디렉토리(WORKDIR)** 위치로 접근한 것을 알 수 있다. (pwd -> /app)
 - 당연하게도, 기존 명령어를 실행하면 아래와 같이 정상 동작한다. -> `python python-app.py`
-  ![](Docker%20Basic%2003%20-%20Dockerfiles/image%206.png)<!-- {"width":447} -->
+  ![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%206.png)<!-- {"width":447} -->
 ## Dockerfile 응용
 
 ### COPY 파트
@@ -103,7 +103,7 @@ CMD ["python", "/app/python-app.py"]
 
 ```
 - 이후 dockerfile을 다시 빌드하고, 해당 이미지로 컨테이너를 실행해도 동일한 결과가 나온다
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%207.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%207.png)
 
 마찬가지로 COPY source 부분 역시 현재 디렉토리로 지정할 수 있다.
 ```dockerfile
@@ -123,7 +123,7 @@ CMD ["python", "/app/python-app.py"]
 ```
 다만 이 경우에는 현재 디렉토리의 모든 파일이 마운트되기 때문에 심지어 `dockerfile`까지 같이 전달된다(!).
 - 실행 결과 -> 
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%208.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%208.png)
 
 ### .dockerignore 파일 생성
 위와 같은 경우를 방지하기 위해서 `.dockerignore` 파일을 작성할 수 있다. 마치 `.gitignore`와 같다.
@@ -132,7 +132,7 @@ CMD ["python", "/app/python-app.py"]
 Dockerfile
 ```
 이후, 다시 빌드하고 이미지를 실행한 결과 다음과 같이 dockerfile은 보이지 않는다.
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%209.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%209.png)
 
 ## Docker Image 태그
 > docker 이미지 생성 시 태그는 자동으로 latest가 된다.
@@ -189,7 +189,7 @@ docker run --rm --name java-app-container java-app:0.0.1
 \________\____|__  /\___/\____|__  /
                  \/              \/
 ```
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%2010.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%2010.png)
 ### Ruby 애플리케이션
 > 일반적인 ruby 예제
 #### dockerfile 작성
@@ -217,7 +217,7 @@ python-app   latest    2f33e800016f   42 minutes ago   215MB
 ...
 docker run --rm --name ruby-app-container ruby-app:0.0.1
 ```
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%2012.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%2012.png)
 ### Python 애플리케이션
 > 이번에는 ==파라미터==를 넘기는 예제다.
 #### dockerfile 작성
@@ -243,7 +243,7 @@ python-app          latest    2f33e800016f   54 minutes ago   215MB
 docker run --rm --name python-script-app-container python-script-app
 ...
 ```
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%2013.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%2013.png)
 ### Go 애플리케이션
 > 이번에는 환경변수가 존재하나, Dockerfile로 지정하는 설명이 없다. 불가능 한가? 
 > -> 결론부터 이야기하면 ==가능==하다.
@@ -324,4 +324,4 @@ Yes this is ENV in dockerfile
     - ==VOLUME== : 볼륨 설정
     - ==LABEL== : 이미지에 작성자, 버전 등의 정보를 입력하기 위함
 - ==Dockerfile==로 [생성](bear://x-callback-url/open-note?id=4D5740F7-6C9C-4630-BF99-BAC7DD453B0D&header=%EA%B0%9C%EC%9A%94)된 ==Image==, 그리고 그 Image를 이용해 ==Docker Container==를 실행한다.
-![](Docker%20Basic%2003%20-%20Dockerfiles/image%2011.png)
+![](assets/Docker%20Basic%2003%20-%20Dockerfiles/image%2011.png)

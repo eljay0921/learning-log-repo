@@ -111,11 +111,11 @@ flask-app    |  * Debugger PIN: 926-138-631
 ...
 ```
 실행된 로그를 보면, `08-starter-code_default`이라는 network를 자동으로 생성했으며, node-server와 flask-app 컨테이너가 차례로 생성된 것을 볼 수 있다. 그리고 현재 해당 컨테이너들의 상태와 로그를 다음과 같이 docker desktop에서도 볼 수 있다.
-![](Docker%20Basic%2008%20-%20Docker%20Compose/image.png)
+![](assets/Docker%20Basic%2008%20-%20Docker%20Compose/image.png)
 앞서 정의한 localhost:5001로 접근하면 정상적으로 서버가 올라온 것도 볼 수 있다. 
-![](Docker%20Basic%2008%20-%20Docker%20Compose/image%202.png)<!-- {"width":442} --> ![](Docker%20Basic%2008%20-%20Docker%20Compose/image%203.png)<!-- {"width":506} -->
+![](assets/Docker%20Basic%2008%20-%20Docker%20Compose/image%202.png)<!-- {"width":442} --> ![](assets/Docker%20Basic%2008%20-%20Docker%20Compose/image%203.png)<!-- {"width":506} -->
 docker desktop을 통해 container들의 로그도 모니터링 할 수 있다.
-![](Docker%20Basic%2008%20-%20Docker%20Compose/image%204.png)
+![](assets/Docker%20Basic%2008%20-%20Docker%20Compose/image%204.png)
 
 ### docker compose로 컨테이너 중지하기
 ```sh
@@ -127,7 +127,7 @@ docker compose down
 ...
 ```
 `docker compose down` 명령을 통해 모든 컨테이너를 중지 및 삭제하고, network까지 정리할 수 있다. 
-![](Docker%20Basic%2008%20-%20Docker%20Compose/image%205.png)
+![](assets/Docker%20Basic%2008%20-%20Docker%20Compose/image%205.png)
 
 ## 정리
 > docker compose를 이용해 여러 개의 서비스를 실행하는 방법을 학습했다.
