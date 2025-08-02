@@ -1,4 +1,4 @@
-# Udemy Docker Basic 02 - Containerizing Apps
+# Docker Basic 02 - Containerizing Apps
 
 #dev/skill/container/docker 
 
