@@ -13,7 +13,7 @@
 `docker desktop` 애플리케이션을 실행하고, Settings - Kubernetes로 이동하자. 이후 Enable Kubernetes를 활성화한 뒤 restart.
 ![](assets/image.png)
 
-![](assets/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-09-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.24.29.png)  
+![image-20250902154011128](assets/image-20250902154011128.png)
 
 이후 `kubectl` 명령어를 실행해 k8s와 상호작용하는 `CLI`가 정상 동작하는지 확인한다.
 ```sh
