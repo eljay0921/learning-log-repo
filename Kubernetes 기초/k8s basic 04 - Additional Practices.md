@@ -9,10 +9,10 @@
 
 ## 실습
 자 앞선 학습에서 `grade-submission-poratl` 애플리케이션을 `pod`로 실행해봤다. 이번에는 그 `api` 서비스인 `grade-submission-api` 애플리케이션을 pod로 실행하자. `api` 역시 `Health Checker` 컨테이너가 존재하는 `sidecar` 패턴으로 구축한다.
-![](assets/k8s%20basic%2004%20-%20Additional%20Practices/image.png)
+![image-20250903192719155](assets/image-20250903192719155.png)
 
 >참고로 해당 작업에 필요한 모든 이미지는 강사가 제공한 docker hub에서 내려받아 진행 중이다.
-![](assets/k8s%20basic%2004%20-%20Additional%20Practices/image 2.png)
+![image-20250903192737412](assets/image-20250903192737412.png)
 
 ### pod.yaml 작성
 > /section-one/grade-submission-api-pod.yaml
@@ -70,7 +70,7 @@ Forwarding from [::1]:8080 -> 5001
 ```
 
 이후 `localhost:8080`으로 접근은 되었지만 여전히 `submit` 버튼 클릭 시 오류가 발생했다. 아무래도 `portal`과 `api` 두 `pod`가 서로 통신하기 위한 추가적인 설정이 필요할 것으로 보인다. 
-![](assets/k8s%20basic%2004%20-%20Additional%20Practices/image 3.png)
+![image-20250903192751558](assets/image-20250903192751558.png)
 더불어 `api`가 바라보는 `DB`(MongoDB)가 없는 문제도 있다.
 
 ```log
@@ -128,7 +128,7 @@ pod "grade-submission-portal" deleted
 ```
 
 ### 현재 구성
-![](assets/k8s%20basic%2004%20-%20Additional%20Practices/image 4.png)
+![image-20250903192801131](assets/image-20250903192801131.png)
 > 하지만 두 pod간에 통신이 안 되고 있다 -> 다음 강의에
 
 ## 정리
