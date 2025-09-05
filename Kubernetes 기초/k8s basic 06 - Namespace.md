@@ -61,7 +61,7 @@
 
 ### namespace
 
-![](assets/image.png)
+![image-20250905104050514](assets/image-20250905104050514.png)
 
 이번 장에선 namespace에 대해 학습한다. namespace는 물리적인 공간이 아닌 논리적인 구성이며 리소스(메모리, cpu)를 소비하지 않는다. 덕분에 우리는 관련된 리소스들을(pod 등) 쉽게 관리할 수 있다.
 
@@ -71,7 +71,7 @@
 
 **section-03** 폴더를 만들고, section-02에 있던 모든 파일들을 복사한다.
 
-![](assets/image 2.png)
+![image-20250905104044677](assets/image-20250905104044677.png)
 
 ### 실습하기: CLI
 아직 pod들을 실행하지 않은 상태이다. `kubectl get namespaces` 명령으로 기본 생성되어있던 namespace를 확인한다.
@@ -150,7 +150,7 @@ service/grade-submission-portal created
 ```
 이제야 제대로 실행되었다. 
 
-![](assets/image 3.png)
+![image-20250905104058608](assets/image-20250905104058608.png)
 
 ### 실습하기: YAML
 
