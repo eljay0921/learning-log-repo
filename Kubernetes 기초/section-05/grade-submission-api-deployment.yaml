@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grade-submission-api
+  namespace: grade-submission
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: grade-submission-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 50%
+      maxSurge: 1 # 최대 3개의 replicas 실행할 것을 보장
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: grade-submission
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: grade-submission-api
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: grade-submission-api
+        image: rslim087/kubernetes-course-grade-submission-api:stateless
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "128m"
+          limits:
+            memory: "128Mi"
+        ports:
+          - containerPort: 3000
