@@ -131,8 +131,9 @@ spec:
 
 ```
 다음과 같이 livenessProbe와 readiness 속성을 추가했다.
-![](image%203.png)
+![image 3](assets/image 3.png)
 물론 application에서 사전에 /healthz에 대한 엔드포인트를 구현해야한다.
+
 - initialDelaySeconds: 15 -> 초기 15초 이후에 실행한다.
 - periodSeconds: 5 -> 5초마다 실행한다.
 
