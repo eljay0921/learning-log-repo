@@ -6,6 +6,21 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/instance: mongodb
+    statefulset.kubernetes.io/pod-name: mongodb-0  # PRIMARY Pod만 선택
+  ports:
+  - port: 27017
+    targetPort: 27017
+---
+# Headless Service for StatefulSet internal communication
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-headless
+  namespace: grade-submission
+spec:
+  clusterIP: None
+  selector:
+    app.kubernetes.io/instance: mongodb
   ports:
   - port: 27017
     targetPort: 27017

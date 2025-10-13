@@ -7,8 +7,8 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/instance: mongodb
-  serviceName: mongodb    ## mongodb-0 mongodb-1 
-  replicas: 1
+  serviceName: mongodb-headless    ## mongodb-0 mongodb-1 
+  replicas: 2
   template:
     metadata:
       labels:
@@ -19,11 +19,30 @@ spec:
       containers:
       - name: mongodb
         image: mongo:4.4
+        command:
+        - mongod
+        - --replSet
+        - rs0
+        - --bind_ip_all
         ports:
         - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_DATABASE
+          value: "test"
         volumeMounts:
         - name: mongodb-persistent-storage
           mountPath: /data/db
+        - name: init-script
+          mountPath: /scripts
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/bash", "-c", "nohup /scripts/init-replicaset.sh &"]
+      volumes:
+      - name: init-script
+        configMap:
+          name: mongodb-init-script
+          defaultMode: 0755
   volumeClaimTemplates:
   - metadata:
       name: mongodb-persistent-storage
